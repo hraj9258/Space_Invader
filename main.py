@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((800, 600))
 
 # Title and Icon
 pygame.display.set_caption("Space Invader!")
-logo = pygame.image.load("icon.ico")
+logo = pygame.image.load("logo.png")
 pygame.display.set_icon(logo)
 
 # starting the gameloop

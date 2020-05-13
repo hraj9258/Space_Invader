@@ -7,3 +7,8 @@ enemy.png
 .idea/Python_Game.iml
 .idea/vcs.xml
 .idea/inspectionProfiles/profiles_settings.xml
+background.png
+background.wav
+bullet.png
+explosion.wav
+laser.wav

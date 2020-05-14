@@ -28,7 +28,6 @@ enemyY = random.randint(50, 150)
 enemyX_change = 4
 enemyY_change = 40
 
-ddddddd
 def player(x, y):
     screen.blit(playerImg, (x, y))  # blit is used to show the image
 

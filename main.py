@@ -33,7 +33,7 @@ bulletImg = pygame.image.load("bullet.png")
 bulletX = 0
 bulletY = 480
 bulletX_change = 0
-bulletY_change = 10
+bulletY_change = 25
 bullet_state = "ready"
 
 def player(x, y):
@@ -69,7 +69,9 @@ while running:
             if event.key == pygame.K_d:
                 playerX_change = 5
             if event.key == pygame.K_SPACE:
-                bullet_fire(playerX, bulletY)
+                if bullet_state is "ready":
+                    bulletX = playerX # store the value of x where the space_bar has been pressed 
+                    bullet_fire(bulletX, bulletY)
 
         if event.type == pygame.KEYUP:  # check for key release
             if event.key == pygame.K_a or event.key == pygame.K_d:
@@ -82,7 +84,7 @@ while running:
     elif playerX >= 736:
         playerX = 736
 
-    # enrmy movement
+    # enemy movement
     enemyX += enemyX_change
 
     if enemyX <= 0:
@@ -93,8 +95,12 @@ while running:
         enemyY += enemyY_change
 
     # bullet movement
-    if bullet_state is "fire":
-        bullet_fire(playerX, bulletY)
+    if bulletY <= 0: # Checks if the bullet has crossed the limits  
+        bulletY = 480
+        bullet_state = "ready"
+
+    if bullet_state is "fire": # fires the bullet
+        bullet_fire(bulletX, bulletY)
         bulletY -= bulletY_change
 
     player(playerX, playerY)

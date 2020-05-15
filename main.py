@@ -8,11 +8,11 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))  # 800 is width and 600 is height
 
 # background
-background = pygame.image.load("background.png")
+background = pygame.image.load("assets/background.png")
 
 # Title and Icon
 pygame.display.set_caption("Space Invader!")
-logo = pygame.image.load("logo.png")
+logo = pygame.image.load("assets/logo.png")
 pygame.display.set_icon(logo)
 
 # player
@@ -30,21 +30,31 @@ enemyY_change = []
 num_of_enemy = 6
 
 for i in range(num_of_enemy):
-    enemyImg.append(pygame.image.load("enemy.png"))
+    enemyImg.append(pygame.image.load("assets/enemy.png"))
     enemyX.append(random.randint(0, 735))
     enemyY.append(random.randint(50, 150))
     enemyX_change.append(4)
     enemyY_change.append(40)
 
 # Bullet
-bulletImg = pygame.image.load("bullet.png")
+bulletImg = pygame.image.load("assets/bullet.png")
 bulletX = 0
 bulletY = 480
 bulletX_change = 0
 bulletY_change = 25
 bullet_state = "ready"
 
-score = 0
+# score
+
+score_value = 0
+font = pygame.font.Font("freesansbold.ttf", 32)
+
+textX = 10
+textY = 10
+
+def show_score(x, y):
+    score = font.render("Score: "+ str(score_value), True, (225, 225, 225))
+    screen.blit(score, (x, y))
 
 def player(x, y):
     screen.blit(playerImg, (x, y))  # blit is used to show the image
@@ -118,8 +128,7 @@ while running:
         if collision:
             bulletY = 480
             bullet_state = "ready"
-            score += 1
-            print(score)
+            score_value += 1
             enemyX[i] = random.randint(0, 735)
             enemyY[i] = random.randint(50, 150)
         
@@ -136,5 +145,5 @@ while running:
 
 
     player(playerX, playerY)
-
+    show_score(textX, textY)
     pygame.display.update()

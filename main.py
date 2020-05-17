@@ -25,7 +25,7 @@ playerX_change = 0
 enemyImg = []
 enemyX = []
 enemyY = []
-enemyX_change =[]
+enemyX_change = []
 enemyY_change = []
 num_of_enemy = 6
 
@@ -47,14 +47,16 @@ bullet_state = "ready"
 # score
 
 score_value = 0
-font = pygame.font.Font("freesansbold.ttf", 32)
+font = pygame.font.Font("Baby_Boomer.ttf", 32)
 
 textX = 10
 textY = 10
 
+
 def show_score(x, y):
-    score = font.render("Score: "+ str(score_value), True, (225, 225, 225))
+    score = font.render("Score: " + str(score_value), True, (0, 125, 125))
     screen.blit(score, (x, y))
+
 
 def player(x, y):
     screen.blit(playerImg, (x, y))  # blit is used to show the image
@@ -70,14 +72,15 @@ def bullet_fire(x, y):
     screen.blit(bulletImg, (x + 16, y + 10))
 
 
-def iscollision(enemyX,enemyY,bulletX,bulletY):
+def iscollision(enemyX, enemyY, bulletX, bulletY):
     bulXenmX = (bulletX - enemyX)**2
-    bulYenmY=  (bulletY - enemyY)**2
+    bulYenmY = (bulletY - enemyY)**2
     distance = (bulXenmX + bulYenmY)**0.5
     if distance < 27:
         return True
     else:
         return False
+
 
 # starting the gameloop
 running = True
@@ -99,7 +102,7 @@ while running:
                 playerX_change = 5
             if event.key == pygame.K_SPACE:
                 if bullet_state is "ready":
-                    bulletX = playerX # store the value of x where the space_bar has been pressed 
+                    bulletX = playerX  # store the value of x where the space_bar has been pressed
                     bullet_fire(bulletX, bulletY)
 
         if event.type == pygame.KEYUP:  # check for key release
@@ -124,25 +127,24 @@ while running:
             enemyY[i] += enemyY_change[i]
 
         # collision
-        collision = iscollision(enemyX[i],enemyY[i],bulletX,bulletY)
+        collision = iscollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
             bulletY = 480
             bullet_state = "ready"
             score_value += 1
             enemyX[i] = random.randint(0, 735)
             enemyY[i] = random.randint(50, 150)
-        
+
         enemy(enemyX[i], enemyY[i], i)
 
     # bullet movement
-    if bulletY <= 0: # Checks if the bullet has crossed the limits  
+    if bulletY <= 0:  # Checks if the bullet has crossed the limits
         bulletY = 480
         bullet_state = "ready"
 
-    if bullet_state is "fire": # fires the bullet
+    if bullet_state is "fire":  # fires the bullet
         bullet_fire(bulletX, bulletY)
         bulletY -= bulletY_change
-
 
     player(playerX, playerY)
     show_score(textX, textY)

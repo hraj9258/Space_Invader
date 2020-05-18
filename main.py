@@ -13,7 +13,7 @@ background = pygame.image.load("assets/background.png")
 
 # background music
 backmusic = mixer.music.load("assets/background.wav")
-mixer.music.play(-2)
+mixer.music.play(-1)
 
 # Title and Icon
 pygame.display.set_caption("Space Invader!")
@@ -57,6 +57,24 @@ font = pygame.font.Font("Baby_Boomer.ttf", 32)
 textX = 10
 textY = 10
 
+# Accuracy
+no_of_hit = 0
+
+acur_text = 100
+acur_font = pygame.font.Font("Baby_Boomer.ttf", 30)
+
+acurX = 600
+acurY = 10
+
+# No of fire
+
+num_of_fire = 0
+num_fire_font = pygame.font.Font("freesansbold.ttf", 20)
+
+numfX = 630
+numfY = 80
+
+
 # Game Over
 gameover_font = pygame.font.Font("freesansbold.ttf", 64)
 
@@ -65,9 +83,21 @@ def show_score(x, y):
     score = font.render("Score: " + str(score_value), True, (0, 125, 125))
     screen.blit(score, (x, y))
 
+
+def show_acur(x, y):
+    acur = acur_font.render("Accuracy: " + str(acur_text), True, (225, 225, 225))
+    screen.blit(acur, (x, y))
+
+
+def show_numfire(x, y):
+    num_fire = num_fire_font.render("Bullet Fired:" + str(num_of_fire), True, (225, 225, 225, 0.1))
+    screen.blit(num_fire, (x, y))
+
+
 def game_over_text():
-    game_over = gameover_font.render("GAME OVER", True, (225, 225,225))
-    screen.blit(game_over,(200, 250))
+    game_over = gameover_font.render("GAME OVER", True, (225, 225, 225))
+    screen.blit(game_over, (200, 250))
+
 
 def player(x, y):
     screen.blit(playerImg, (x, y))  # blit is used to show the image
@@ -115,6 +145,8 @@ while running:
                 if bullet_state is "ready":
                     bullet_sound = mixer.Sound("assets/laser.wav")
                     bullet_sound.play()
+                    num_of_fire += 1
+                    acur_text = (no_of_hit/num_of_fire)*100
                     bulletX = playerX  # store the value of x where the space_bar has been pressed
                     bullet_fire(bulletX, bulletY)
 
@@ -132,7 +164,7 @@ while running:
     # enemy movement
     for i in range(num_of_enemy):
 
-        #game over
+        # game over
         if enemyY[i] > playerY:
             for j in range(num_of_enemy):
                 enemyY[j] = 2000
@@ -156,6 +188,8 @@ while running:
             bulletY = 480
             bullet_state = "ready"
             score_value += 1
+            no_of_hit += 1
+            acur_text = (no_of_hit/num_of_fire)*100
             enemyX[i] = random.randint(0, 735)
             enemyY[i] = random.randint(50, 150)
 
@@ -172,4 +206,6 @@ while running:
 
     player(playerX, playerY)
     show_score(textX, textY)
+    show_acur(acurX, acurY)
+    show_numfire(numfX, numfY)
     pygame.display.update()

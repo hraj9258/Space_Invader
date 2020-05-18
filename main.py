@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((800, 600))  # 800 is width and 600 is height
 background = pygame.image.load("assets/background.png")
 
 # background music
-mixer.music.load("assets/background.wav")
+backmusic = mixer.music.load("assets/background.wav")
 mixer.music.play(-2)
 
 # Title and Icon
@@ -57,11 +57,17 @@ font = pygame.font.Font("Baby_Boomer.ttf", 32)
 textX = 10
 textY = 10
 
+# Game Over
+gameover_font = pygame.font.Font("freesansbold.ttf", 64)
+
 
 def show_score(x, y):
     score = font.render("Score: " + str(score_value), True, (0, 125, 125))
     screen.blit(score, (x, y))
 
+def game_over_text():
+    game_over = gameover_font.render("GAME OVER", True, (225, 225,225))
+    screen.blit(game_over,(200, 250))
 
 def player(x, y):
     screen.blit(playerImg, (x, y))  # blit is used to show the image
@@ -125,6 +131,15 @@ while running:
 
     # enemy movement
     for i in range(num_of_enemy):
+
+        #game over
+        if enemyY[i] > playerY:
+            for j in range(num_of_enemy):
+                enemyY[j] = 2000
+            game_over_text()
+            mixer.music.stop()
+            break
+
         enemyX[i] += enemyX_change[i]
         if enemyX[i] <= 0:
             enemyX_change[i] = 4

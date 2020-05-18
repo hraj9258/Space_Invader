@@ -1,4 +1,5 @@
 import pygame
+from pygame import mixer
 import random
 
 # initializing the pygame
@@ -9,6 +10,10 @@ screen = pygame.display.set_mode((800, 600))  # 800 is width and 600 is height
 
 # background
 background = pygame.image.load("assets/background.png")
+
+# background music
+mixer.music.load("assets/background.wav")
+mixer.music.play(-2)
 
 # Title and Icon
 pygame.display.set_caption("Space Invader!")
@@ -102,6 +107,8 @@ while running:
                 playerX_change = 5
             if event.key == pygame.K_SPACE:
                 if bullet_state is "ready":
+                    bullet_sound = mixer.Sound("assets/laser.wav")
+                    bullet_sound.play()
                     bulletX = playerX  # store the value of x where the space_bar has been pressed
                     bullet_fire(bulletX, bulletY)
 
@@ -129,6 +136,8 @@ while running:
         # collision
         collision = iscollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
+            collision_sound = mixer.Sound("assets/explosion.wav")
+            collision_sound.play()
             bulletY = 480
             bullet_state = "ready"
             score_value += 1

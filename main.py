@@ -146,7 +146,6 @@ while running:
                     bullet_sound = mixer.Sound("assets/laser.wav")
                     bullet_sound.play()
                     num_of_fire += 1
-                    acur_text = (no_of_hit/num_of_fire)*100
                     bulletX = playerX  # store the value of x where the space_bar has been pressed
                     bullet_fire(bulletX, bulletY)
 
@@ -189,7 +188,10 @@ while running:
             bullet_state = "ready"
             score_value += 1
             no_of_hit += 1
-            acur_text = (no_of_hit/num_of_fire)*100
+            if num_of_fire == 0:
+                pass
+            else:
+                acur_text = (no_of_hit/num_of_fire)*100
             enemyX[i] = random.randint(0, 735)
             enemyY[i] = random.randint(50, 150)
 
@@ -197,6 +199,7 @@ while running:
 
     # bullet movement
     if bulletY <= 0:  # Checks if the bullet has crossed the limits
+        acur_text = (no_of_hit/num_of_fire)*100
         bulletY = 480
         bullet_state = "ready"
 

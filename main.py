@@ -13,6 +13,7 @@ background = pygame.image.load("assets/background.png")
 
 # background music
 backmusic = mixer.music.load("assets/background.wav")
+mixer.music.set_volume(0.7)
 mixer.music.play(-1)
 
 # Title and Icon
@@ -183,6 +184,7 @@ while running:
         collision = iscollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
             collision_sound = mixer.Sound("assets/explosion.wav")
+            mixer.Sound.set_volume(collision_sound,0.7)
             collision_sound.play()
             bulletY = 480
             bullet_state = "ready"
